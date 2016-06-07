@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# THIS Hook is a client side hook, it will ensure your commit 
+# message alwasy contains a JIRA task
+# INSTALL 
+# cat commit-msg > "$(git rev-parse --show-toplevel)/.git/hooks/commit-msg" 
+# chmod +x "$(git rev-parse --show-toplevel)/.git/hooks/commit-msg" 
+
+# TO ADD ALLOWED PROJECTS SIMPLY ADD ONE MORE ELEMENT TO THE ARRAY BELLOW
+
+
+ALLOWEDKEYS=(
+"DEVOPS-"
+"RT-"
+"INC-"
+"BCP-"
+"IGNOREJIRA"
+)
+
+
+
+if egrep -q $( IFS=$'|'; echo "${ALLOWEDKEYS[*]}" ) $1
+then
+    exit 0
+else
+        echo >&2 "ERROR: Commit message is missing Jira/RT issue number."
+        exit 1
+        exit 0
+fi

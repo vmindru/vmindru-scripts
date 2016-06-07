@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+DOMAIN=gmail.com 
+AUTHOR=$(git var GIT_AUTHOR_IDENT )
+if ! git var GIT_AUTHOR_IDENT | egrep -E -o -q "[a-zA-Z0-9.-]+@$DOMAIN"  
+then
+   echo "Please commit under strata user email instead of \"$AUTHOR\"
+ you can git commit --author=\"$USER@$DOMAIN\"
+ or add this permanently git config user.email \"$USER@$DOMAIN\""
+
+
+   exit 1
+fi
+exit 0
