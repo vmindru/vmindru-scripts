@@ -8,11 +8,10 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
-import openstackclient 
 import novaclient as novdoc
 import neutronclient.v2_0 as neudoc
 
-VERSION = 2
+VERSION = 1.0
 
 AUTH_URL = os.environ['OS_AUTH_URL']
 USERNAME = os.environ['OS_USERNAME']
