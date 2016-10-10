@@ -8,6 +8,7 @@ from keystoneauth1 import loading
 from keystoneauth1 import session
 from novaclient import client as novaclient
 from neutronclient.v2_0 import client as neutronclient
+import openstackclient 
 import novaclient as novdoc
 import neutronclient.v2_0 as neudoc
 
@@ -101,9 +102,26 @@ def delete_security_groups(neutron):
         print "waiting, pending delete {} security_groups".format(len(security_groups))
         time.sleep(2)
 
+def delete_keypair(nova):
+    keypairs = nova.keypairs.list() 
+    print "starting keypairs delete, will delete {} keypairs".format(len(keypairs))
+    for keypair in keypairs:
+        keypair_name = keypair._info['keypair']['name']
+        nova.keypairs.delete(keypair_name) 
+    keypairs = nova.keypairs.list() 
+    while len(keypairs) != 0:
+        time.sleep(2)
+        print "waiting, pending delete {} keypairs".format(len(security_groups))
+        keypairs = nova.keypairs.list() 
+
 
 delete_servers(nova)
 delete_floating_ips(neutron)
-delete_networks(neutron)
 delete_router(neutron)
+delete_networks(neutron)
 delete_security_groups(neutron)
+delete_keypair(nova)
+
+
+
+
